@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import person from './Person/Person';
 
 class App extends Component {
   state = {
     persons: [
-      {name: 'Can', age: 26},
-      {name: 'Kyle', age: 23},
-      {name: 'Nico',age: 30}
+      {id : 'asdfsd', name: 'Can', age: 26},
+      {id : 'kjklkj', name: 'Kyle', age: 23},
+      {id : 'uejdj', name: 'Nico',age: 30}
     ],
     showPersons: false 
   }
@@ -20,11 +19,14 @@ class App extends Component {
    this.setState({persons:persons}); 
  }
   
-  nameChangedHandler = (event) =>{
-    this.setState({persons:[
-      {name: event.target.value, age: 23},
-      {name: 'Nico',age: 21}
-    ]})
+  nameChangedHandler = (event,id) =>{
+    const personIndex = this.state.persons.findIndex(p =>{
+      return p.id === id; 
+    }) ; 
+
+    const person ={...this.state.persons[personIndex]};
+    person.name= event.target.value; 
+    
   }
 
   togglePersonsHandler = () => {
@@ -44,14 +46,16 @@ class App extends Component {
 
     let persons = null; 
 
-    if(this.state.showPersons){
+    if(this.state.showPersons === true){
       persons = (
         <div>
           {this.state.persons.map((person,index) => {
             return <Person 
-            click ={()=>this.deletePersonHandler(index)}
+            click ={()=> this.deletePersonHandler(index)}
             name = {person.name}
-            age ={person.age}/>
+            age ={person.age}
+            key = {person.id} 
+            changed  ={(event) =>this.nameChangedHandler(event, person.id)}/>
           })}
       </div>
       ) 

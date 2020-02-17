@@ -9,7 +9,7 @@
 }; 
 
  @media(min-width:500px){ 
-    .person{
+    .Person{
         width: 450px; 
     }
 } 
